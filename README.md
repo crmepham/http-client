@@ -1,6 +1,12 @@
 # http-client
 A generic HTTP client written in Kotlin
 
+## Technologies used
+1. Java 1.8
+2. Kotlin 1.2.71
+3. Gson 2.8.5
+4. Apache Commons IO 2.6
+
 ## Install
 Add the following depency to your Maven project pom.xml
 ```xml
