@@ -21,6 +21,19 @@ class HttpClientTest {
     }
 
     @Test
+    fun testGet() {
+        val httpClient = HttpClientBuilder().uri("http://ptsv2.com/t/").build()
+        val result = httpClient.getAsString("n7gmb-1546017023/post")
+        assertThat(result).isNotNull()
+    }
+
+    @Test
+    fun testPostVoid() {
+        val httpClient = HttpClientBuilder().uri("http://ptsv2.com/t/").build()
+        httpClient.post("n7gmb-1546017023/post", oauthToken())
+    }
+
+    @Test
     fun testBasicAuthentication() {
         val httpClient = HttpClientBuilder().uri(BASIC_BASE_URI)
                                             .authenticationProvider(BasicAuthenticationProvider()
@@ -57,12 +70,7 @@ class HttpClientTest {
     @Test
     fun testOauthAuthenticationWithAccessToken() {
 
-        val token = OauthToken()
-        token.accessToken = "16633882-klzcsXDIBJ0bTbAnuzo76xN4G2s"
-        token.refreshToken = "16633882-TsVMYkxm60jPjtM6erZyJcQjAgo"
-        token.expiresIn = 3600
-        token.scope = "edit flair history identity modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread"
-        token.type = "bearer"
+        val token = oauthToken()
 
         val httpClient = HttpClientBuilder().uri(OAUTH_BASE_URI)
                                             .headers(getSharedHeaders())
@@ -99,6 +107,16 @@ class HttpClientTest {
 
         assertThat(httpClient.authenticationProvider).isNotNull
         assertThat(response).isNotNull
+    }
+
+    private fun oauthToken() : OauthToken {
+        val token = OauthToken()
+        token.accessToken = "16633882-klzcsXDIBJ0bTbAnuzo76xN4G2s"
+        token.refreshToken = "16633882-TsVMYkxm60jPjtM6erZyJcQjAgo"
+        token.expiresIn = 3600
+        token.scope = "edit flair history identity modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread"
+        token.type = "bearer"
+        return token
     }
 
     private fun getSharedHeaders() : MutableList<NameValuePair> {
