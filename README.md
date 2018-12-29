@@ -18,8 +18,12 @@ Add the following depency to your Maven project pom.xml
 ```
 
 ## Features
-1. HTTP Basic authentication
-2. OAuth2 authentication
+1. HTTP Basic authentication.
+2. OAuth2 authentication.
+3. Deserializes the response body to JSON by default, but can return a String of the response body instead.
+4. Supports GET, PUT, POST, PATH, DELETE HTTP methods.
+5. Supply object to be serialized to JSON, and deserializes JSON to the specified type.
+6. Supply request body parameters instead of JSON.
 
 ## How to use
 
