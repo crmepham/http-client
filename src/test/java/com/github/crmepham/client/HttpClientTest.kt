@@ -2,10 +2,12 @@ package com.github.crmepham.client
 
 import com.github.crmepham.provider.BasicAuthenticationProvider
 import com.github.crmepham.provider.OauthAuthenticationProvider
+import com.google.gson.reflect.TypeToken
 import org.apache.http.NameValuePair
 import org.apache.http.message.BasicNameValuePair
 import org.assertj.core.api.Assertions.assertThat
 import org.junit.Test
+import java.util.*
 
 
 class HttpClientTest {
@@ -21,16 +23,18 @@ class HttpClientTest {
     }
 
     @Test
+    fun testGetType() {
+        val returnType = object : TypeToken<List<OauthToken>>() {}.type
+        val httpClient = HttpClientBuilder().uri("http://ptsv2.com/t/").build()
+        val result = httpClient.get("n7gmb-1546017023/post", returnType)
+        assertThat(result).isNotNull
+    }
+
+    @Test
     fun testGet() {
         val httpClient = HttpClientBuilder().uri("http://ptsv2.com/t/").build()
         val result = httpClient.get("n7gmb-1546017023/post")
         assertThat(result).isNotNull()
-    }
-
-    @Test
-    fun testPostVoid() {
-        val httpClient = HttpClientBuilder().uri("http://ptsv2.com/t/").build()
-        httpClient.post("n7gmb-1546017023/post", oauthToken())
     }
 
     @Test
