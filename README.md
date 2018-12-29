@@ -64,3 +64,10 @@ val httpClient = HttpClientBuilder().uri("https://url.com/api/v1/")
 val response = httpClient.get("me", Map::class.java)
 ```
 In this example we are building the HTTP client with a OAuth2 authenticator, and individually adding HTTP headers. We are also building up the OAuth2 authenticator with the standard OAuth2 parameters, but also we are supplying specific HTTP headers and a URI required just during authentication. 
+
+###Supply object for JSON serialization or body parameters
+```java
+val user = User("John", "Smith", 24, "male")
+val httpClient = HttpClientBuilder().uri("https://url.com/api/v1/").build()
+val response = httpClient.get("get-all", List::class.java)
+```
