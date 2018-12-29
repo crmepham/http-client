@@ -65,9 +65,22 @@ val response = httpClient.get("me", Map::class.java)
 ```
 In this example we are building the HTTP client with a OAuth2 authenticator, and individually adding HTTP headers. We are also building up the OAuth2 authenticator with the standard OAuth2 parameters, but also we are supplying specific HTTP headers and a URI required just during authentication. 
 
-###Supply object for JSON serialization or body parameters
+### Supply object for JSON serialization
 ```java
 val user = User("John", "Smith", 24, "male")
 val httpClient = HttpClientBuilder().uri("https://url.com/api/v1/").build()
-val response = httpClient.get("get-all", List::class.java)
+val response = httpClient.post("create", user, String::class.java)
 ```
+In this example we are passing an instance of `User` as the second parameter. This will automagically get serialized into JSON and sent in the request body.
+
+### Supply body parameters
+```java
+val httpClient = HttpClientBuilder().uri("https://url.com/api/v1/").build()
+
+val parameters = listOf<NameValuePair>(
+                BasicNameValuePair("gender", "male"),
+                BasicNameValuePair("firstName", "John"))
+                
+val response = httpClient.post("search", parameters, List::class.java)
+```
+In this example we are padding a list of `NameValuePair`s that we be sent in the request body as URL encoded parameters. 
