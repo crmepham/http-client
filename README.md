@@ -84,3 +84,11 @@ val parameters = listOf<NameValuePair>(
 val response = httpClient.post("search", parameters, List::class.java)
 ```
 In this example we are passing a list of `NameValuePair`s that will be sent in the request body as URL encoded parameters. 
+
+### GSON TokenType
+```java
+val returnType = object : TypeToken<List<OauthToken>>() {}.type
+val httpClient = HttpClientBuilder().uri("https://url.com/api/v1/").build()
+val response = httpClient.post("search", returnType)
+```
+In this example we are passing a `GSON` `TokenType` so that the response will be automagically parsed into a `List` of `OauthToken`. Only use this for complex datatypes. Otherwise, you can simply pass the type, such as `OauthToken::class.java`.
