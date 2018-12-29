@@ -4,6 +4,7 @@ import com.github.crmepham.provider.AuthenticationProvider
 import org.apache.http.NameValuePair
 import org.apache.http.message.BasicNameValuePair
 
+/** Builds an instance of <em>HttpClient</em>. */
 class HttpClientBuilder {
 
     private val client = HttpClient()

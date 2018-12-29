@@ -7,7 +7,6 @@ import org.apache.http.impl.auth.BasicScheme
 
 class BasicAuthenticationProvider : AuthenticationProvider {
 
-    private val basicAuthenticationProvider = BasicAuthenticationProvider()
     private var username: String? = null
     private var password: String? = null
     private var credentials: Credentials? = null
@@ -28,7 +27,7 @@ class BasicAuthenticationProvider : AuthenticationProvider {
 
     fun build() : BasicAuthenticationProvider {
         this.credentials = UsernamePasswordCredentials(username, password)
-        return basicAuthenticationProvider
+        return this
     }
 
 }

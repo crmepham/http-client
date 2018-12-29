@@ -23,7 +23,7 @@ class HttpClientTest {
     @Test
     fun testGet() {
         val httpClient = HttpClientBuilder().uri("http://ptsv2.com/t/").build()
-        val result = httpClient.getAsString("n7gmb-1546017023/post")
+        val result = httpClient.get("n7gmb-1546017023/post")
         assertThat(result).isNotNull()
     }
 
@@ -49,17 +49,15 @@ class HttpClientTest {
     fun testOauthAuthenticationWithAuthorizationCode() {
 
         val httpClient = HttpClientBuilder().uri(OAUTH_BASE_URI)
-                                            .headers(getSharedHeaders())
+                                            .headers(sharedHeaders())
                                             .authenticationProvider(OauthAuthenticationProvider()
                                                     .clientId(CLIENT_ID)
                                                     .clientSecret(CLIENT_SECRET)
                                                     .uri(OAUTH_AUTH_URI)
                                                     .redirectUri(REDIRECT_URI)
-                                                    .headers(getSharedHeaders())
+                                                    .headers(sharedHeaders())
                                                     .buildWithAuthorizationToken(AUTH_TOKEN))
                                             .build()
-
-        val firstResponse = httpClient.get("me", Map::class.java)
 
         val response = httpClient.get("me", Map::class.java)
 
@@ -70,17 +68,15 @@ class HttpClientTest {
     @Test
     fun testOauthAuthenticationWithAccessToken() {
 
-        val token = oauthToken()
-
         val httpClient = HttpClientBuilder().uri(OAUTH_BASE_URI)
-                                            .headers(getSharedHeaders())
+                                            .headers(sharedHeaders())
                                             .authenticationProvider(OauthAuthenticationProvider()
                                                     .clientId(CLIENT_ID)
                                                     .clientSecret(CLIENT_SECRET)
                                                     .uri(OAUTH_AUTH_URI)
                                                     .redirectUri(REDIRECT_URI)
-                                                    .headers(getSharedHeaders())
-                                                    .buildWithAccessToken(token))
+                                                    .headers(sharedHeaders())
+                                                    .buildWithAccessToken(oauthToken()))
                                             .build()
 
         val response = httpClient.get("me", Map::class.java)
@@ -93,13 +89,13 @@ class HttpClientTest {
     fun testOauthAuthenticationWithRefreshToken() {
 
         val httpClient = HttpClientBuilder().uri(OAUTH_BASE_URI)
-                                            .headers(getSharedHeaders())
+                                            .headers(sharedHeaders())
                                             .authenticationProvider(OauthAuthenticationProvider()
                                                     .clientId(CLIENT_ID)
                                                     .clientSecret(CLIENT_SECRET)
                                                     .uri(OAUTH_AUTH_URI)
                                                     .redirectUri(REDIRECT_URI)
-                                                    .headers(getSharedHeaders())
+                                                    .headers(sharedHeaders())
                                                     .buildWithRefreshToken("16633882-TsVMYkxm60jPjtM6erZyJcQjAgo"))
                                             .build()
 
@@ -116,10 +112,11 @@ class HttpClientTest {
         token.expiresIn = 3600
         token.scope = "edit flair history identity modconfig modflair modlog modposts modwiki mysubreddits privatemessages read report save submit subscribe vote wikiedit wikiread"
         token.type = "bearer"
+        token.created = System.currentTimeMillis()
         return token
     }
 
-    private fun getSharedHeaders() : MutableList<NameValuePair> {
+    private fun sharedHeaders() : MutableList<NameValuePair> {
         return mutableListOf(
                 BasicNameValuePair("Content-Type", "application/x-www-form-urlencoded"),
                 BasicNameValuePair("User-Agent", "Just testing"))
