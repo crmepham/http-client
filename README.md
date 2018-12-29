@@ -83,4 +83,4 @@ val parameters = listOf<NameValuePair>(
                 
 val response = httpClient.post("search", parameters, List::class.java)
 ```
-In this example we are padding a list of `NameValuePair`s that we be sent in the request body as URL encoded parameters. 
+In this example we are passing a list of `NameValuePair`s that will be sent in the request body as URL encoded parameters. 
